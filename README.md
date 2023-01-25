@@ -1,0 +1,3 @@
+# python-gmail-api
+Smtp: SMTP , portu 25 olan TCP üzerinden çalışan bir email protocolüdür.  Gönderici ve alıcı serverları arasında direkt transferi yapar.  Transfer sırasında üç aşama gerçekleştirir. Handshakinig (meeting kısmı) , mesaj transferi ve closure kısmı. 
+Imap ve pop3: ımap ve pop3 birbirine çok benzer işlevi olan iki protokol. Ancak günümüzde ımap kullanılır. Pop3 daha önce çıkmıştır fakat pop3ün birkaç dezavantajı vardır. Örneğin pop3 indir ve delete et mekanizmasında çalışır.  Stateless accross session. Imap ise  tüm mesajları serverda tutar . ımap user state accross session dır.  Pop3 e göre daha kullanışlıdır. 
