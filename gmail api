@@ -1,0 +1,37 @@
+import smtplib
+(python dilinde mail göndermek için bu kütüphaneyi eklememiz gerekiyor.)(import smtplib python’un dahili bir kütüphanesidir)
+import os
+(farklı işletim sistemleriyle kolay iletşim kurmak için kullandığımız bir modüldür.
+from email.mime.text import MIMEText
+(mime text bize gmail üzerinden mail göndermemizi sağlıyor. )
+(gmail sunucusuna bağlanıyoruz)
+
+# connect with Google's servers
+smtp_ssl_host = 'smtp.gmail.com'
+smtp_ssl_port = 465 
+(smtp ssl portu olan 465i ekliyoruz . 465 eklememizin sebebi ssl içermesi. Ssl istemeseydik 587 portunu eklerdik, tabi bu 587den 25 olarak değiştirilmiş durumda artık.  Bu şekilde mesajlarımız gönderici ve alıcı arasında şifrelenmiş oluyor en önemli kısım burası.) 
+# use username or email to log in
+username = 'cerenkamazceren@gmail.com’ (gönderen kişinin kullanıcı adını yani mail adresini buraya eklememiz gerekiyor. ) (kod üzerinden mailimize ulaşmak için ise bilgisayarımızda bir takım değşiklikler yapıyoruz ??)
+password = os.environ.get('EMAIL_PASS’) (şifremizi tanımlamıştık onu giriyoruz bu şekilde ??)
+
+from_addr = 'cerenkamazceren@gmail.com' (mesajı hangi mail üzerinden göndermek isityorsak bu kısma yazıyoruz.
+to_addrs = ['melikenazligurbuz@gmail.com']   (hangi mail adresi hedefimizdeyse o mail adresini de buraya ekliyoruz. 
+
+# the email lib has a lot of templates
+# for different message formats,
+# on our case we will use MIMEText 
+# to send only text
+message = MIMEText('Hello Nazlı!')  (göndermek istediğimiz mesajı bu satıra ekliyoruz. ) (biz şu an sadece text bazlı mesaj göndereceğiz.) 
+message['subject'] = 'the code works succesfully’ (mesaj konusunu eklememiz gereken satır burası) (mesajın olmazsa olmazı değildir ancak eklenmediği takdirde alıcının spam kutusuna düşebilir. Eklenmesini tavsiye ediyoruz)
+message['from'] = from_addr  
+message['to'] = ', '.join(to_addrs)
+
+# we'll connect using SSL
+
+server = smtplib.SMTP_SSL(smtp_ssl_host, smtp_ssl_port) (smtp ssl port 465 i yukarda eklemiştik.) (smtp host için ise yukarda smtp.gmail.com u kullandık. Burda biz gmail api kullanmak istediğimiz için )
+son olarak sunucu kısmımızı ssl ile bağdaştırıyoruz) (güvenlik iiçin şifreleme istiyoruz)
+# to interact with the server, first we log in
+# and then we send the message
+server.login(username, password) (sunucuyu yukarda başlattık şimdi ise giriş yapıyor)
+server.sendmail(from_addr, to_addrs, message.as_string()) (mailimizi gönderdik mail içeriğini yukarda yazmıştık.)
+server.quit() (işimiz bitti artık bellek yemeye veya çalışmasına gerek yok sunucuyu kapatıyoruz.)
